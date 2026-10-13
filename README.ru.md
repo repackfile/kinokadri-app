@@ -18,30 +18,29 @@ Windows 10 / 11 · Бесплатно · [Эта же инструкция на 
 
 Программа лежит на GitHub. Выберите один из двух способов — результат одинаковый.
 
-#### Способ 1. Скачать с GitHub
+#### Способ 1. Установка одной командой (PowerShell)
 
-1. Нажмите кнопку <b>«Скачать»</b>. Откроется страница программы на GitHub.
-2. В нижней части этой страницы найдите раздел <b>Assets</b> и нажмите на файл <b>KinokadriSetup.exe</b>. Файл загрузится. Файлы «Source code» не нужны.
-3. Если браузер остановил загрузку и пишет, что файл скачивают редко, откройте список загрузок браузера и выберите <b>Keep</b> («Сохранить»).
-4. Откройте скачанный файл двойным щелчком (обычно он лежит в папке <b>Downloads</b> / «Загрузки»).
-5. Подождите: программа установится и откроется сама. Ничего выбирать не нужно.
+Самый простой способ: Windows сама скачает программу с GitHub и установит её.
 
-👉 **[KinokadriSetup.exe](https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe)** · [Releases](https://github.com/repackfile/kinokadri-app/releases/latest)
+1. Щёлкните <b>правой кнопкой мыши</b> по значку Windows внизу экрана и выберите <b>Терминал</b> (Terminal; в Windows 10 он называется <b>Windows PowerShell</b>).
+2. Скопируйте эту команду кнопкой <b>«Копировать»</b>.
 
-#### Способ 2. Установка через PowerShell (одна команда)
+   ```powershell
+   curl.exe -L -o "$env:TEMP\KinokadriSetup.exe" "https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe"; if ($?) { Start-Process "$env:TEMP\KinokadriSetup.exe" }
+   ```
 
-В этом случае Windows сама скачает файл с той же страницы GitHub и запустит установку.
-
-1. Щёлкните правой кнопкой мыши по кнопке <b>Пуск</b> (значок Windows внизу экрана) и выберите <b>Терминал</b> или <b>Windows PowerShell</b>.
-2. Скопируйте команду ниже кнопкой <b>«Копировать»</b>.
-3. В открывшемся окне нажмите правую кнопку мыши (команда вставится), затем <kbd>Enter</kbd>.
-4. Подождите: файл скачается (около 50 МБ), и установка начнётся сама.
-
-```powershell
-curl.exe -L -o "$env:TEMP\KinokadriSetup.exe" "https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe"; if ($?) { Start-Process "$env:TEMP\KinokadriSetup.exe" }
-```
+3. В открывшемся окне нажмите <b>правую кнопку мыши</b> (команда вставится), затем клавишу <kbd>Enter</kbd>. Программа скачается, и установка начнётся сама.
 
 Команда делает две вещи: скачивает KinokadriSetup.exe с GitHub во временную папку и запускает его. Права администратора не нужны.
+
+#### Способ 2. Скачать с GitHub
+
+1. Нажмите кнопку <b>«Скачать»</b>. Откроется страница программы на GitHub.
+2. В нижней части этой страницы найдите раздел <b>Assets</b> и нажмите на файл <b>KinokadriSetup.exe</b>. Файлы «Source code» не нужны.
+3. Если браузер остановил загрузку и пишет, что файл скачивают редко, откройте список загрузок браузера и выберите <b>Keep</b> («Сохранить»).
+4. Откройте скачанный файл двойным щелчком. Программа установится и откроется сама.
+
+👉 **[KinokadriSetup.exe](https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe)** · [Releases](https://github.com/repackfile/kinokadri-app/releases/latest)
 
 > Программа новая, поэтому Windows может показать синее окно «Windows protected your PC» («Система Windows защитила ваш компьютер»). В этом случае нажмите <b>More info</b> («Подробнее»), затем <b>Run anyway</b> («Выполнить в любом случае»). Убедитесь, что файл скачан с этой страницы GitHub, а не с другого сайта.
 

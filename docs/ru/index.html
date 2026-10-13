@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Скачать фильм с KINOKADRI — программа для Windows</title>
+<meta name="description" content="Как скачать фильм с Kinokadri на компьютер: бесплатная программа для Windows и пошаговая инструкция с картинками.">
+<link rel="canonical" href="https://repackfile.github.io/kinokadri-app/ru/">
+<link rel="alternate" hreflang="ka" href="https://repackfile.github.io/kinokadri-app/">
+<link rel="alternate" hreflang="ru" href="https://repackfile.github.io/kinokadri-app/ru/">
+<link rel="alternate" hreflang="en" href="https://repackfile.github.io/kinokadri-app/en/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<!-- ეს ფაილი build_guide.py-ით იქმნება. ტექსტი იქ შეცვალე, აქ არა. -->
+<style>
+@font-face {
+	font-family: "KK Nino";
+	src: url("../img/nino.woff2") format("woff2");
+	unicode-range: U+10A0-10FF, U+1C90-1CBF, U+2D00-2D2F;
+	font-display: swap;
+}
+:root {
+	--bg: #00031c;
+	--panel: #0b0f30;
+	--card: #12163c;
+	--line: rgba(255, 255, 255, 0.1);
+	--accent: #6c52ee;
+	--accent-2: #a596ff;
+	--text: #cfd0db;
+	--muted: #8f92ab;
+	--white: #fff;
+	--warn: #f5b74f;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+	margin: 0;
+	background: var(--bg);
+	color: var(--text);
+	font: 16px/1.75 "KK Nino", "Segoe UI", system-ui, -apple-system, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent-2); }
+img { max-width: 100%; height: auto; display: block; }
+.wrap { width: 100%; max-width: 980px; margin: 0 auto; padding: 0 20px; }
+
+/* ---------- თავი ---------- */
+.top { border-bottom: 1px solid var(--line); background: rgba(7, 10, 38, 0.9); }
+.top .wrap { display: flex; align-items: center; gap: 10px; min-height: 60px; }
+.top img { height: 26px; }
+.top b { color: var(--white); letter-spacing: 2px; font: 600 15px/1 "Segoe UI", system-ui, sans-serif; }
+.top .back { margin-left: auto; font-size: 14px; text-decoration: none; }
+.langs { display: flex; gap: 2px; margin-left: 14px; padding: 3px; border: 1px solid var(--line); border-radius: 10px; }
+.langs a { padding: 3px 10px; border-radius: 7px; color: var(--muted); text-decoration: none; font: 600 12px/1.7 "Segoe UI", sans-serif; }
+.langs a[aria-current] { background: var(--accent); color: #fff; }
+
+/* ---------- პროგრამის ბარათი (მაღაზიის მსგავსად) ---------- */
+.app { display: flex; align-items: center; gap: 24px; margin: 44px 0 0; padding: 28px; border: 1px solid var(--line); border-radius: 24px 24px 0 0; background: linear-gradient(135deg, #171b4d, var(--panel) 60%); }
+.app-icon { width: 124px; height: 124px; flex: none; border-radius: 28px; box-shadow: 0 14px 36px rgba(0, 0, 0, 0.5); }
+.app-info { flex: 1; min-width: 0; }
+.app h1 { margin: 0; color: var(--white); font: 700 clamp(28px, 5vw, 38px)/1.15 "Segoe UI", system-ui, sans-serif; letter-spacing: 0.5px; }
+.app-sub { margin: 6px 0 2px; color: var(--text); font-size: 17px; line-height: 1.45; }
+.app-dev { margin: 0; color: var(--muted); font-size: 13.5px; }
+.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	padding: 14px 34px;
+	border-radius: 999px;
+	background: var(--accent);
+	color: #fff;
+	font-size: 17px;
+	text-decoration: none;
+	box-shadow: 0 10px 30px rgba(108, 82, 238, 0.4);
+	transition: background 0.15s, transform 0.1s;
+	white-space: nowrap;
+}
+.btn:hover { background: #7c64f2; }
+.btn:active { transform: scale(0.98); }
+.btn svg, .ico { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.stats { display: flex; margin: 0 0 46px; padding: 16px 0; list-style: none; border: 1px solid var(--line); border-top: 0; border-radius: 0 0 24px 24px; background: var(--panel); overflow-x: auto; }
+.stats li { flex: 1 0 auto; min-width: 104px; padding: 2px 16px; text-align: center; border-left: 1px solid var(--line); }
+.stats li:first-child { border-left: 0; }
+.stats b { display: block; color: var(--white); font: 600 20px/1.4 "Segoe UI", system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+.stats span { display: block; color: var(--muted); font-size: 12.5px; line-height: 1.4; }
+
+.how { margin: 0 0 22px; text-align: center; }
+.how h2 { margin: 0 0 8px; color: var(--white); font-size: clamp(23px, 4.4vw, 32px); font-weight: 500; line-height: 1.3; }
+.how p { max-width: 640px; margin: 0 auto; color: var(--muted); }
+
+/* ---------- მოკლე გეგმა ---------- */
+.plan { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 10px 0 46px; padding: 0; list-style: none; }
+.plan li { padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); text-align: center; font-size: 14px; }
+.plan a { color: var(--text); text-decoration: none; display: block; }
+.plan b { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; margin: 0 auto 8px; border-radius: 50%; background: rgba(108, 82, 238, 0.2); color: var(--accent-2); font: 600 15px/1 "Segoe UI", sans-serif; }
+
+/* ---------- ნაბიჯები ---------- */
+.step { margin: 0 0 30px; padding: 28px; border: 1px solid var(--line); border-radius: 20px; background: var(--panel); scroll-margin-top: 16px; }
+.step-head { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.num { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; flex: none; border-radius: 14px; background: var(--accent); color: #fff; font: 700 20px/1 "Segoe UI", sans-serif; }
+.step h2 { margin: 0; color: var(--white); font-size: clamp(19px, 3.4vw, 24px); font-weight: 500; line-height: 1.35; }
+.step p { margin: 0 0 14px; }
+.step ol, .step ul { margin: 0 0 16px; padding-left: 22px; }
+.step li { margin-bottom: 6px; }
+.step b { color: var(--white); font-weight: 500; }
+kbd { display: inline-block; padding: 1px 8px; border: 1px solid rgba(255, 255, 255, 0.25); border-bottom-width: 2px; border-radius: 6px; background: rgba(255, 255, 255, 0.06); color: var(--white); font: 600 13px/1.6 "Segoe UI", sans-serif; }
+.shot { margin: 18px 0 4px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #000; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45); }
+.cap { margin: 8px 2px 0; color: var(--muted); font-size: 13px; text-align: center; }
+.note { display: flex; gap: 12px; margin: 16px 0 0; padding: 14px 16px; border: 1px solid rgba(245, 183, 79, 0.3); border-radius: 12px; background: rgba(245, 183, 79, 0.07); font-size: 14.5px; }
+.note .ico { color: var(--warn); margin-top: 3px; }
+.note p { margin: 0; }
+
+/* გადმოწერის ორი გზა (ნაბიჯი 1) */
+.method { margin: 18px 0 0; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+.method h3 { margin: 0 0 10px; color: var(--accent-2); font-size: 18px; font-weight: 500; line-height: 1.4; }
+.method ol { margin-bottom: 6px; }
+.method .after { margin: 12px 0 0; color: var(--muted); font-size: 14px; }
+.assets { max-width: 560px; margin: 14px 0 4px; border: 1px solid #30363d; border-radius: 8px; overflow: hidden; background: #0d1117; font: 14px/1.4 "Segoe UI", system-ui, sans-serif; }
+.assets-head { padding: 10px 16px; color: #e6edf3; font-weight: 600; }
+.assets-head i { margin-left: 6px; padding: 1px 8px; border-radius: 10px; background: #30363d; font-style: normal; font-size: 12px; }
+.assets-row { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-top: 1px solid #30363d; color: #7d8590; }
+.assets-row.hit { outline: 2px solid var(--accent); outline-offset: -2px; background: rgba(108, 82, 238, 0.16); }
+.assets-row.hit span { color: #4493f8; font-weight: 600; }
+.assets-row b { margin-left: auto; color: var(--accent-2); font-weight: 500; font-family: "KK Nino", "Segoe UI", sans-serif; }
+.method li { margin-bottom: 14px; }
+.badge { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font: 700 12px/1 "Segoe UI", sans-serif; }
+.win { max-width: 520px; margin: 12px 0 4px; padding: 18px 0 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: radial-gradient(120% 140% at 20% 0%, #3b5bdb 0%, #5f3dc4 38%, #1b1f5c 75%, #0b0f30 100%); font: 13px/1.3 "Segoe UI", system-ui, sans-serif; }
+.win-menu { display: flex; flex-direction: column; width: 200px; margin: 0 auto 8px; padding: 5px; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 9px; background: rgba(28, 30, 48, 0.62); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); }
+.win-menu span { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 5px; color: rgba(255, 255, 255, 0.62); }
+.win-menu .hit { background: rgba(255, 255, 255, 0.16); color: #fff; font-weight: 600; outline: 2px solid var(--accent-2); }
+.win-bar { display: flex; justify-content: center; gap: 6px; padding: 7px 0; border-top: 1px solid rgba(255, 255, 255, 0.12); background: rgba(20, 22, 40, 0.5); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+.win-bar i { position: relative; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 6px; }
+.win-bar i::before { content: ""; width: 20px; height: 20px; border-radius: 5px; opacity: 0.85; }
+.win-bar .c1::before { background: #f4c14f; } .win-bar .c2::before { background: #38b6ff; border-radius: 50%; } .win-bar .c3::before { background: #5ed38b; } .win-bar .c4::before { background: #ff7a7a; }
+.win-start { background: rgba(255, 255, 255, 0.16); outline: 2px solid var(--accent-2); }
+.win-start::before { display: none; }
+.win-start svg { width: 20px; height: 20px; }
+.win-start .badge { position: absolute; top: -9px; left: -9px; }
+.win p, .term p { margin: 0; padding: 9px 12px; background: rgba(0, 3, 28, 0.72); color: var(--text); text-align: center; font: 13.5px/1.5 "KK Nino", "Segoe UI", sans-serif; }
+.win p .badge { vertical-align: 1px; }
+.term { max-width: 520px; margin: 12px 0 4px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #0c0c0c; font: 13px/1.5 Consolas, "Cascadia Mono", monospace; }
+.term-bar { display: flex; justify-content: space-between; padding: 7px 12px; background: #1f1f1f; color: #ddd; font: 12.5px/1.4 "Segoe UI", sans-serif; }
+.term-bar i { font-style: normal; color: #999; }
+.term-body { padding: 12px 12px 22px; color: #f2f2f2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.term-body .ps { color: #9cdcfe; }
+.term-body u { display: inline-block; width: 8px; height: 15px; margin-left: 3px; background: #f2f2f2; vertical-align: -2px; animation: kk-caret 1s steps(1) infinite; }
+@keyframes kk-caret { 50% { opacity: 0; } }
+.code { display: flex; align-items: stretch; margin: 12px 0 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #05071f; }
+.code pre { flex: 1; min-width: 0; margin: 0; padding: 14px 16px; color: #d7dcff; font: 13.5px/1.6 Consolas, "Cascadia Mono", monospace; white-space: pre-wrap; word-break: break-all; user-select: all; }
+.copy { flex: none; padding: 0 20px; border: 0; border-left: 1px solid var(--line); background: var(--accent); color: #fff; font: inherit; font-size: 14.5px; cursor: pointer; }
+.copy:hover { background: #7c64f2; }
+.copy.ok { background: #1f9d63; }
+
+/* ბრაუზერის მისამართის ზოლის ნახატი (ნაბიჯი 3) */
+.browser { margin: 18px 0 4px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #1c1f2e; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45); }
+.browser-bar { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: #2a2d3e; }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 11px; height: 11px; border-radius: 50%; background: #5a5d72; }
+.url { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 20px; background: #14162280; outline: 2px solid var(--accent); box-shadow: 0 0 0 6px rgba(108, 82, 238, 0.22); font: 13.5px/1.4 "Segoe UI", sans-serif; color: #fff; }
+.url span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; background: rgba(108, 82, 238, 0.55); padding: 1px 4px; border-radius: 3px; }
+.url .ico { width: 15px; height: 15px; color: #9fa2c2; }
+.browser-body { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 26px 18px; background: linear-gradient(180deg, #0d1030, #00031c); color: var(--muted); font-size: 14px; text-align: center; }
+.arrow { color: var(--accent-2); font: 700 22px/1 "Segoe UI", sans-serif; }
+
+/* ---------- კითხვები ---------- */
+.faq { margin: 46px 0 20px; }
+.faq h2 { color: var(--white); font-size: 24px; font-weight: 500; margin: 0 0 16px; }
+details { margin-bottom: 10px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+summary { padding: 16px 20px; color: var(--white); cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--accent-2); font: 400 22px/1 "Segoe UI", sans-serif; }
+details[open] summary::after { content: "–"; }
+details p { margin: 0; padding: 0 20px 18px; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; border-radius: 6px; }
+
+.end { padding: 30px 0 60px; text-align: center; }
+footer { padding: 24px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; text-align: center; }
+
+@media (max-width: 720px) {
+	.top .back { font-size: 0; }
+	.top .back::before { content: "←"; font-size: 18px; }
+	.app { flex-wrap: wrap; gap: 16px; margin-top: 24px; padding: 20px 16px; }
+	.app-icon { width: 84px; height: 84px; border-radius: 20px; }
+	.app .btn { width: 100%; justify-content: center; }
+	.stats { justify-content: flex-start; }
+	.plan { grid-template-columns: repeat(2, 1fr); }
+	.step { padding: 20px 16px; border-radius: 16px; }
+	.num { width: 40px; height: 40px; font-size: 18px; border-radius: 12px; }
+	.end .btn { width: 100%; justify-content: center; }
+	.browser-body { flex-direction: column; }
+	.method { padding: 16px 14px; }
+	.code { flex-direction: column; }
+	.copy { padding: 12px; border-left: 0; border-top: 1px solid var(--line); }
+	.assets-row b { font-size: 12.5px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } .term-body u { animation: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+	<div class="wrap">
+		<img src="../img/logo.svg" alt="">
+		<b>KINOKADRI</b>
+		<a class="back" href="https://kinokadri.co/" aria-label="Вернуться на сайт">← Вернуться на сайт</a>
+		<nav class="langs" aria-label="Language"><a href="../" hreflang="ka" lang="ka" title="ქართული">KA</a><a href="../ru/" hreflang="ru" lang="ru" title="Русский" aria-current="page">RU</a><a href="../en/" hreflang="en" lang="en" title="English">EN</a></nav>
+	</div>
+</header>
+
+<main class="wrap">
+
+	<section class="app">
+		<img class="app-icon" src="../img/icon.png" width="124" height="124" alt="">
+		<div class="app-info">
+			<h1>Kinokadri</h1>
+			<p class="app-sub">Скачивание фильмов на компьютер</p>
+			<p class="app-dev">kinokadri.co · программа для Windows</p>
+		</div>
+		<a class="btn" href="https://github.com/repackfile/kinokadri-app/releases/latest" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg>Скачать</a>
+	</section>
+	<ul class="stats">
+		<li id="stat-count" hidden><b id="dl-count"></b><span>скачиваний</span></li>
+		<li><b id="app-ver">1.0.18</b><span>версия</span></li>
+		<li><b id="app-size">50 MB</b><span>размер</span></li>
+		<li><b>Windows</b><span>10 и 11</span></li>
+		<li><b>KA · RU · EN</b><span>языки</span></li>
+		<li><b>Бесплатно</b><span>цена</span></li>
+	</ul>
+
+	<section class="how">
+		<h2>Как скачать фильм</h2>
+		<p>Установите программу один раз — после этого любой фильм скачивается в три действия.</p>
+	</section>
+
+	<ol class="plan">
+		<li><a href="#s1"><b>1</b>Скачайте и установите программу</a></li>
+		<li><a href="#s3"><b>2</b>Скопируйте ссылку на фильм с сайта</a></li>
+		<li><a href="#s4"><b>3</b>Вставьте ссылку в программу</a></li>
+		<li><a href="#s5"><b>4</b>Выберите качество и скачайте</a></li>
+	</ol>
+
+	<section class="step" id="s1">
+		<div class="step-head"><div class="num">1</div><h2>Скачайте и установите программу</h2></div>
+		<p>Программа лежит на GitHub. Выберите один из двух способов — результат одинаковый.</p>
+		<div class="method">
+			<h3>Способ 1. Установка одной командой (PowerShell)</h3>
+			<p>Самый простой способ: Windows сама скачает программу с GitHub и установит её.</p>
+			<ol>
+				<li>Щёлкните <b>правой кнопкой мыши</b> по значку Windows внизу экрана и выберите <b>Терминал</b> (Terminal; в Windows 10 он называется <b>Windows PowerShell</b>).
+					<div class="win" role="img" aria-label="Панель задач Windows: в меню по правому щелчку на кнопке Пуск выделен пункт Terminal"><div class="win-menu"><span>System</span><span>Device Manager</span><span class="hit"><b class="badge">2</b>Terminal</span><span>Terminal (Admin)</span><span>Task Manager</span><span>Settings</span></div><div class="win-bar"><i class="win-start"><b class="badge">1</b><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#4cc2ff" d="M1 1h8.5v8.5H1zM10.5 1H19v8.5h-8.5zM1 10.5h8.5V19H1zM10.5 10.5H19V19h-8.5z"/></svg></i><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div><p><b>1</b> правая кнопка по значку Windows &nbsp;→&nbsp; <b>2</b> Terminal</p></div>
+				</li>
+				<li>Скопируйте эту команду кнопкой <b>«Копировать»</b>.
+					<div class="code"><pre id="ps-cmd">curl.exe -L -o "$env:TEMP\KinokadriSetup.exe" "https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe"; if ($?) { Start-Process "$env:TEMP\KinokadriSetup.exe" }</pre><button type="button" class="copy" data-copy="ps-cmd" data-done="Скопировано">Копировать</button></div>
+				</li>
+				<li>В открывшемся окне нажмите <b>правую кнопку мыши</b> (команда вставится), затем клавишу <kbd>Enter</kbd>. Программа скачается, и установка начнётся сама.
+					<div class="term" role="img" aria-label="Окно PowerShell со вставленной командой"><div class="term-bar"><span>Windows PowerShell</span><i>—&nbsp;&nbsp;☐&nbsp;&nbsp;✕</i></div><div class="term-body"><span class="ps">PS C:\Users\You&gt;</span> curl.exe -L -o … KinokadriSetup.exe …<u></u></div><p>правая кнопка мыши, затем <kbd>Enter</kbd></p></div>
+				</li>
+			</ol>
+			<p class="after">Команда делает две вещи: скачивает KinokadriSetup.exe с GitHub во временную папку и запускает его. Права администратора не нужны.</p>
+		</div>
+		<div class="method">
+			<h3>Способ 2. Скачать с GitHub</h3>
+			<ol>
+				<li>Нажмите кнопку <b>«Скачать»</b>. Откроется страница программы на GitHub.</li>
+				<li>В нижней части этой страницы найдите раздел <b>Assets</b> и нажмите на файл <b>KinokadriSetup.exe</b>. Файлы «Source code» не нужны.</li>
+				<li>Если браузер остановил загрузку и пишет, что файл скачивают редко, откройте список загрузок браузера и выберите <b>Keep</b> («Сохранить»).</li>
+				<li>Откройте скачанный файл двойным щелчком. Программа установится и откроется сама.</li>
+			</ol>
+			<div class="assets" role="img" aria-label="Раздел Assets на странице GitHub: выделен файл KinokadriSetup.exe">
+				<div class="assets-head">▾ Assets <i>3</i></div>
+				<div class="assets-row hit"><span>KinokadriSetup.exe</span><b>← нажмите на этот файл</b></div>
+				<div class="assets-row"><span>Source code (zip)</span></div>
+				<div class="assets-row"><span>Source code (tar.gz)</span></div>
+			</div>
+		</div>
+		<div class="note">
+			<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5m0 3v.5"/></svg>
+			<p>Программа новая, поэтому Windows может показать синее окно «Windows protected your PC» («Система Windows защитила ваш компьютер»). В этом случае нажмите <b>More info</b> («Подробнее»), затем <b>Run anyway</b> («Выполнить в любом случае»). Убедитесь, что файл скачан с этой страницы GitHub, а не с другого сайта.</p>
+		</div>
+		<div class="note">
+			<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5m0 3v.5"/></svg>
+			<p>На некоторых компьютерах при установке появится надпись «Устанавливается Microsoft WebView2». Это компонент Microsoft, он ставится один раз и занимает несколько минут. Не закрывайте окно.</p>
+		</div>
+	</section>
+
+	<section class="step" id="s2">
+		<div class="step-head"><div class="num">2</div><h2>Прочитайте правила и согласитесь</h2></div>
+		<p>При первом запуске программа покажет, что она делает на вашем компьютере. Прочитайте, отметьте <b>«Я прочитал(а) правила и согласен(на) с ними»</b> и нажмите <b>«Согласиться и продолжить»</b>.</p>
+		<div class="shot"><img src="../img/ru/app-terms.png" width="984" height="621" alt="Первый экран программы: текст правил, две галочки и кнопка продолжения" loading="lazy"></div>
+		<p class="cap">Этот экран показывается только один раз.</p>
+	</section>
+
+	<section class="step" id="s3">
+		<div class="step-head"><div class="num">3</div><h2>Скопируйте ссылку на фильм с сайта</h2></div>
+		<ol>
+			<li>Откройте <a href="https://kinokadri.co/movie/">kinokadri.co</a> и перейдите на страницу фильма, который хотите скачать.</li>
+			<li>Щёлкните по верхней строке браузера, где написан адрес сайта. Адрес выделится (станет синим).</li>
+			<li>Нажмите на клавиатуре <kbd>Ctrl</kbd> + <kbd>C</kbd>. Ссылка скопирована.</li>
+		</ol>
+		<div class="browser" role="img" aria-label="Окно браузера: в адресной строке выделен адрес страницы фильма">
+			<div class="browser-bar">
+				<div class="dots"><i></i><i></i><i></i></div>
+				<div class="url">
+					<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+					<span>https://kinokadri.co/movie/project-wolf-hunting/</span>
+				</div>
+			</div>
+			<div class="browser-body"><span class="arrow">↑</span> Это ссылка на фильм. Выделите её и нажмите Ctrl + C</div>
+		</div>
+		<p class="cap">Ссылка всегда начинается так: kinokadri.co/movie/…</p>
+	</section>
+
+	<section class="step" id="s4">
+		<div class="step-head"><div class="num">4</div><h2>Вставьте ссылку в программу</h2></div>
+		<ol>
+			<li>Вернитесь в программу Kinokadri, на страницу <b>«Загрузки»</b>.</li>
+			<li>Нажмите кнопку <b>«Вставить»</b>. Ссылка сама появится в поле, и фильм откроется.</li>
+		</ol>
+		<p>Если так удобнее: щёлкните по полю, нажмите <kbd>Ctrl</kbd> + <kbd>V</kbd>, затем кнопку <b>«Открыть»</b>.</p>
+		<div class="shot"><img src="../img/ru/app-paste.png" width="984" height="621" alt="Страница Загрузки: сверху поле со вставленной ссылкой и кнопки Вставить и Открыть" loading="lazy"></div>
+	</section>
+
+	<section class="step" id="s5">
+		<div class="step-head"><div class="num">5</div><h2>Выберите качество и озвучку</h2></div>
+		<ol>
+			<li><b>Качество:</b> чем больше число, тем лучше картинка и больше файл. Рядом указан примерный размер.</li>
+			<li><b>Озвучка:</b> выберите язык. Можно отметить несколько и переключать их в плеере при просмотре.</li>
+			<li>Нажмите <b>«Скачать»</b>.</li>
+		</ol>
+		<div class="shot"><img src="../img/ru/app-movie.png" width="984" height="621" alt="Окно фильма: постер, кнопки качества с размерами, языки озвучки, папка и кнопка Скачать" loading="lazy"></div>
+		<div class="note">
+			<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5m0 3v.5"/></svg>
+			<p>Файлы 1080P и 4K меньше, чем можно ожидать, потому что сделаны современным кодированием. Качество от этого не страдает. Подробности — по нажатию на жёлтый значок <b>«!»</b>.</p>
+		</div>
+	</section>
+
+	<section class="step" id="s6">
+		<div class="step-head"><div class="num">6</div><h2>Подождите и смотрите</h2></div>
+		<p>Фильм появится в списке с полосой прогресса. Программу можно закрыть: она остаётся значком возле часов и продолжает скачивать.</p>
+		<ul>
+			<li>Когда появится надпись <b>«Готово»</b>, нажмите значок <b>▷</b> — фильм откроется.</li>
+			<li>Значок папки покажет, где лежит файл (обычно <b>Videos → Kinokadri</b>).</li>
+			<li>Все скачанные фильмы видны на странице <b>«Библиотека»</b>.</li>
+		</ul>
+		<div class="shot"><img src="../img/ru/app-downloading.png" width="984" height="621" alt="Список загрузок: один фильм скачивается с полосой прогресса, один в очереди, один готов" loading="lazy"></div>
+		<p class="cap">Для следующего фильма повторите шаги 3–5. Устанавливать программу заново не нужно.</p>
+	</section>
+
+	<section class="faq">
+		<h2>Частые вопросы</h2>
+		<details>
+			<summary>Программа платная?</summary>
+			<p>Нет, программа и скачивание фильмов бесплатны.</p>
+		</details>
+		<details>
+			<summary>Вставил(а) ссылку, а программа пишет, что фильм не найден</summary>
+			<p>Ссылка должна быть адресом страницы фильма и начинаться так: kinokadri.co/movie/… Ссылка на главную страницу, поиск или сериал не подойдёт. Откройте страницу самого фильма и скопируйте адрес оттуда.</p>
+		</details>
+		<details>
+			<summary>Скачанный фильм не открывается или нет звука</summary>
+			<p>На некоторых компьютерах стандартный плеер Windows не открывает файлы 1080P и 4K. Установите бесплатный плеер VLC (videolan.org) и откройте фильм в нём. Или скачайте качество 720P — оно открывается везде.</p>
+		</details>
+		<details>
+			<summary>Можно остановить загрузку и продолжить позже?</summary>
+			<p>Да. Нажмите в списке значок паузы, а чтобы продолжить — значок ▷. Загрузка продолжится с того места, где остановилась, даже после выключения компьютера.</p>
+		</details>
+		<details>
+			<summary>Как удалить программу?</summary>
+			<p>Откройте в параметрах Windows раздел «Приложения» (Apps), найдите Kinokadri и нажмите «Удалить». Скачанные фильмы не удалятся.</p>
+		</details>
+		<details>
+			<summary>Работает на телефоне или Mac?</summary>
+			<p>Пока программа работает только на Windows 10 и 11.</p>
+		</details>
+	</section>
+
+	<section class="end">
+		<a class="btn" href="https://github.com/repackfile/kinokadri-app/releases/latest" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg>Скачать Kinokadri</a>
+	</section>
+
+</main>
+
+<footer>
+	<div class="wrap">Kinokadri · скачанные фильмы предназначены только для личного просмотра.</div>
+</footer>
+
+<script>
+// ბრძანების კოპირება ღილაკით
+document.querySelectorAll('.copy').forEach(function (btn) {
+	btn.addEventListener('click', function () {
+		var text = document.getElementById(btn.dataset.copy).textContent, label = btn.textContent;
+		function done() { btn.textContent = btn.dataset.done; btn.classList.add('ok'); setTimeout(function () { btn.textContent = label; btn.classList.remove('ok'); }, 1800); }
+		function fallback() {
+			var ta = document.createElement('textarea');
+			ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+			document.body.appendChild(ta); ta.select();
+			try { document.execCommand('copy'); done(); } catch (e) {}
+			ta.remove();
+		}
+		if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+	});
+});
+</script>
+<script>
+// გადმოწერების რაოდენობა, ვერსია და ზომა GitHub-ის რელიზებიდან. პასუხი 10 წუთით ინახება ბრაუზერში;
+// თუ GitHub არ პასუხობს, რაოდენობის უჯრა უბრალოდ არ ჩანს, ვერსია და ზომა კი აწყობისას ჩაწერილი რჩება.
+(function () {
+	var API = 'https://api.github.com/repos/repackfile/kinokadri-app/releases?per_page=100', KEY = 'kk_app_stats', LOCALE = 'ru-RU';
+	function show(s) {
+		if (!s) return;
+		if (s.count > 0) {
+			document.getElementById('dl-count').textContent = Number(s.count).toLocaleString(LOCALE);
+			document.getElementById('stat-count').hidden = false;
+		}
+		if (s.version) document.getElementById('app-ver').textContent = s.version;
+		if (s.size) document.getElementById('app-size').textContent = Math.round(s.size / 1048576) + ' MB';
+	}
+	var cached = null;
+	try { cached = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+	show(cached);
+	if (cached && Date.now() - cached.at < 600000) return;
+	fetch(API, { headers: { Accept: 'application/vnd.github+json' } }).then(function (r) {
+		if (!r.ok) throw 0;
+		return r.json();
+	}).then(function (list) {
+		var s = { at: Date.now(), count: 0, version: '', size: 0 };
+		list.forEach(function (rel) {
+			if (rel.draft) return;
+			(rel.assets || []).forEach(function (a) {
+				if (a.name !== 'KinokadriSetup.exe') return;
+				s.count += a.download_count;
+				if (!s.version && !rel.prerelease) { s.version = String(rel.tag_name).replace(/^v/, ''); s.size = a.size; }
+			});
+		});
+		show(s);
+		try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {}
+	}).catch(function () {});
+})();
+</script>
+</body>
+</html>

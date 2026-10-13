@@ -8,7 +8,7 @@
 
 ## ⬇ [Download the app (KinokadriSetup.exe)](https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe)
 
-Windows 10 / 11 · Free · [The same guide on the site](https://kinokadri.co/download/en/)
+Windows 10 / 11 · Free · [Guide with pictures](https://repackfile.github.io/kinokadri-app/en/)
 
 ## How to download a movie
 

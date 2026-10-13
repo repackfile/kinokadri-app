@@ -8,7 +8,7 @@
 
 ## ⬇ [პროგრამის გადმოწერა (KinokadriSetup.exe)](https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe)
 
-Windows 10 / 11 · უფასო · [იგივე ინსტრუქცია საიტზე](https://kinokadri.co/download/)
+Windows 10 / 11 · უფასო · [ინსტრუქცია სურათებით](https://repackfile.github.io/kinokadri-app/)
 
 ## როგორ გადმოვწერო ფილმი
 

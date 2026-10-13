@@ -8,7 +8,7 @@
 
 ## ⬇ [Скачать программу (KinokadriSetup.exe)](https://github.com/repackfile/kinokadri-app/releases/latest/download/KinokadriSetup.exe)
 
-Windows 10 / 11 · Бесплатно · [Эта же инструкция на сайте](https://kinokadri.co/download/ru/)
+Windows 10 / 11 · Бесплатно · [Инструкция с картинками](https://repackfile.github.io/kinokadri-app/ru/)
 
 ## Как скачать фильм
 
